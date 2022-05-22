@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="demo3" />
+        <module name="ch15-trans-sale" />
+        <module name="springmvc_rest" />
+        <module name="Spring_request" />
+        <module name="ch14-spring-mybaits" />
+        <module name="project" />
+        <module name="demo1" />
+        <module name="spring-aspectj" />
+        <module name="demo2" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="springMVC_demo1" target="1.8" />
+      <module name="springmvc_demo1" target="1.8" />
+      <module name="springmvc_demo3" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
