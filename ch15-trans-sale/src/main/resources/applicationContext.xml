@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--加载外部的属性配置文件-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+
+
+    <!--声明数据源DataSource-->
+    <bean id="myDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+<!--        <property name="url" value="jdbc:mysql://localhost:3306/bookjob"/>-->
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+    <!--声明SqlSessionFactoryBean,在这个类的内部，创建SqlSessionFactory-->
+    <bean id="factory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--指定数据源-->
+        <property name="dataSource" ref="myDataSource"/>
+        <!--指定mybatis主配置文件
+            Resource可以直接使用 value属性赋值
+        -->
+        <property name="configLocation" value="classpath:mybatis.xml"/>
+
+    </bean>
+    <!--声明MapperScannerConfigurer
+        SqlSession.getMapper(StudentDao.class)
+        MapperScannerConfigurer作用是：
+        循环basePackage所表示的包，把包中的每个接口都找到，调用SqlSession。getMapper
+        把每个dao接口都创建出dao对象，dao代理对象放在容器中。
+
+        ApplicationContext ctx=....
+        SqlSessionFactory sqlSessionFactory=ctx.getbean("factory");
+        SqlSession session=sqlSessionFactory.openSession();
+        for(接口：com.zhy.dao) {
+            接口 对象=session.getMapper(接口)
+            springMap.put(（接口名的首字母小写）对象名，对象)
+        }
+
+    -->
+    <!--创建dao的代理-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--指定SqlSessionFactory对象的名称-->
+        <property name="sqlSessionFactoryBeanName" value="factory"/>
+        <!--指定基本包，dao接口所在的包名-->
+        <property name="basePackage" value="com.zhy.dao"/>
+    </bean>
+    <!--声明service-->
+    <bean id="buyService" class="com.zhy.service.impl.BuyGoodsServiceImpl">
+        <property name="goodDao" ref="goodDao"/>
+        <property name="saleDao" ref="saleDao"/>
+    </bean>
+    <!--声明事务的控制-->
+    <!--声明事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--指定数据源DataSource-->
+        <property name="dataSource" ref="myDataSource"/>
+    </bean>
+    <!--开启事务注解驱动：告诉框架使用注解管理事务
+        transaction-Manager:指定事务管理器的id
+        可以使用多个数据库，设置多个数据源
+    -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+</beans>
