@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.secutity.dao.TradeDao">
+    <!--namespace根据自己需要创建的的mapper的路径和名称填写-->
+
+    <insert id="addTrade">
+        insert into trade(trade_stockholder_id,trade_company_id,
+                       trade_type,stock_num,sum_money,current_perprice)
+    values(#{tradeStockholderId},#{tradeCompanyId},
+           #{Type},#{stockNum},#{sumMoney},#{currentPerprice})
+
+    </insert>
+</mapper>

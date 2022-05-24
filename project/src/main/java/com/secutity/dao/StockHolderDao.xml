@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.secutity.dao.StockHolderDao">
+    <!--namespace根据自己需要创建的的mapper的路径和名称填写-->
+
+    <update id="updateStock">
+    update  stockholder set  account_asset=#{accountAsset} where stockholder_id=#{stockholderId}
+
+    </update>
+    
+    <select id="queryasset" resultType="double">
+        select account_asset from stockholder where stockholder_id=#{stockholderId}
+    </select>
+
+    <resultMap id="companyMap" type="company">
+        <result column="company_id" property="companyId"/>
+        <result column="company_name" property="companyName"/>
+        <result column="stock_name" property="stockName"/>
+        <result column="company_stock_perprice" property="companyStockPerprice"/>
+        <result column="company_asset" property="companyAsset"/>
+        <result column="company_stock_num" property="companyStockNum"/>
+        <result column="company_stock_id" property="companyStockId"/>
+
+    </resultMap>
+
+    <select id="queryCompanyAsset" resultMap="companyMap">
+        select * from company where company_id=#{id}
+    </select>
+
+    <update id="updateCompanyasset">
+        update company set company_asset=#{companyAsset} where company_id=#{companyId}
+    </update>
+
+    <update id="updateprice">
+        update company set company_stock_perprice=#{companyStockPerprice} where company_id=#{companyId}
+    </update>
+
+
+</mapper>

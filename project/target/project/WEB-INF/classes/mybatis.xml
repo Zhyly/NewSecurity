@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <properties resource="jdbc.properties"></properties>
+    <!--设置日志-->
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+    <!--别名-->
+    <typeAliases>
+        <package name="com.secutity.entity"/>
+    </typeAliases>
+
+
+    <!--指定其他mapper文件的位置-->
+    
+<!--    <properties resource=""></properties>-->
+<!--    <typeAliases>-->
+
+<!--        <package name=""/>-->
+<!--    </typeAliases>-->
+<!--    <environments default="development">-->
+<!--        <environment id="development">-->
+<!--            <transactionManager type="JDBC"></transactionManager>-->
+<!--            <dataSource type="POOLED">-->
+<!--                <property name="driver" value="${database.driver}"/>-->
+<!--                <property name="url" value="${database.url}"/>-->
+<!--                <property name="username" value="${database.username}"/>-->
+<!--                <property name="password" value="${database.password}"/>-->
+<!--            </dataSource>-->
+<!--        </environment>-->
+<!--    </environments>-->
+<!--    <mappers>-->
+<!--&lt;!&ndash;        <mapper resource="com.zhy.dao.StudentDao.xml"></mapper>&ndash;&gt;-->
+<!--        &lt;!&ndash;-->
+<!--        要求：-->
+<!--        1.mapper文件和dao接口在同一目录-->
+<!--        2.mapper文件和dao接口名称一致-->
+<!--        &ndash;&gt;-->
+
+<!--        <package name="com.secutity.dao"/>-->
+<!--    -->
+<!--    </mappers>-->
+
+
+
+</configuration>
