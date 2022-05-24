@@ -16,7 +16,7 @@
         insert into stocksum(sid,cid,stock_sum)values(#{stockId},#{companyId},#{stockSum})
     </insert>
     <update id="doupdate">
-        update stocksum set stock_sum=#{stockSum} where sid=#{stockId}
+        update stocksum set stock_sum=#{stockSum} where sid=#{stockId} and cid=#{companyId}
     </update>
     <select id="getCount" resultType="int">
         select count(1) from stocksum;

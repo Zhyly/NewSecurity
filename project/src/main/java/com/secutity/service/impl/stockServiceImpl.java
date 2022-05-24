@@ -65,6 +65,8 @@ public class stockServiceImpl implements stockService {
             //计算之后股票总数
             int num=stockSum.getStockSum()+trade.getStockNum();
             stockSum.setStockSum(num);
+            stockSum.setStockId(trade.getTradeStockholderId());
+            stockSum.setCompanyId(trade.getTradeCompanyId());
             stockSumDao.doupdate(stockSum);
         }
         return a;
@@ -75,10 +77,13 @@ public class stockServiceImpl implements stockService {
     public int saleStock(Trade trade) {
         //新增一条交易数据
         int a=tradeDao.addTrade(trade);
+
+        //查询股民拥有资金
+        double asset = stockHolderDao.queryasset(trade.getTradeStockholderId());
         //计算股票卖的钱数
-        double stockmoney=trade.getSumMoney();
+        double stockmoney=trade.getSumMoney()+asset;
         //将股票卖的钱更新到股民账户
-        stockHolderDao.updateStock(trade.getSumMoney(),trade.getTradeStockholderId());
+        stockHolderDao.updateStock(stockmoney,trade.getTradeStockholderId());
         //将股票卖的钱减少了公司资产
         //查询公司资金
         Company company = stockHolderDao.queryCompanyAsset(trade.getTradeCompanyId());
@@ -94,6 +99,8 @@ public class stockServiceImpl implements stockService {
         stockSum=stockSumDao.querytrade(trade.getTradeStockholderId(),trade.getTradeCompanyId());
         int num=stockSum.getStockSum()-trade.getStockNum();
         stockSum.setStockSum(num);
+        stockSum.setStockId(trade.getTradeStockholderId());
+        stockSum.setCompanyId(trade.getTradeCompanyId());
         stockSumDao.doupdate(stockSum);
         //更新股票单价
         //计算股票单价
